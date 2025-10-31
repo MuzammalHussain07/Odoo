@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+</t>
+</template>
+
+
+<!-- Project form: add header image -->
+<record id="view_project_form_inherit_image" model="ir.ui.view">
+<field name="name">project.project.form.inherit.image</field>
+<field name="model">project.project</field>
+<field name="inherit_id" ref="project.edit_project"/>
+<field name="arch" type="xml">
+<xpath expr="//header" position="inside">
+<field name="header_image" filename="header_image_name" widget="image" class="oe_avatar"/>
+</xpath>
+</field>
+</record>
+
+
+<!-- Project kanban default view change suggestion (admins can use custom views) -->
+<!-- For demo: we add a simple kanban view that shows image thumbnail and stage name -->
+<record id="view_project_kanban_custom" model="ir.ui.view">
+<field name="name">project.project.kanban.custom</field>
+<field name="model">project.project</field>
+<field name="arch" type="xml">
+<kanban class="o_kanban_project">
+<templates>
+<t t-name="kanban-box">
+<div t-attf-class="oe_kanban_card o_project_kanban_card">
+<div class="o_kanban_image">
+<t t-if="record.header_image.raw_value">
+<img t-att-src="'/web/image/project.project/' + str(record.id.raw_value) + '/header_image'" style="max-width:150px;"/>
+</t>
+</div>
+<div class="o_kanban_content">
+<strong><field name="name"/></strong>
+<div><field name="partner_id"/></div>
+<div><field name="date_end"/></div>
+</div>
+</div>
+</t>
+</templates>
+</kanban>
+</field>
+</record>
+
+
+</odoo>
